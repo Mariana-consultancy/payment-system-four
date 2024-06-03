@@ -1,10 +1,9 @@
 package api
 
 import (
-
 	"payment-system-one/internal/util"
-	
 
+	"github.com/gin-gonic/gin"
 )
 
 // Readiness is to check if server is up
