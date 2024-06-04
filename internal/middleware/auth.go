@@ -8,10 +8,10 @@ import (
 	"payment-system-one/internal/models"
 )
 
-func AuthorizeAdmin(findUserByEmail func(string) (*models.User, error), tokenInBlacklist func(*string) bool) gin.HandlerFunc {
+func AuthorizeAdmin(findAdminByEmail func(string) (*models.Admin, error), tokenInBlacklist func(*string) bool) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
-		var user *models.User
+		var admin *models.Admin
 		var errors error
 		secret := os.Getenv("JWT_SECRET")
 		accToken := GetTokenFromHeader(c)
@@ -26,20 +26,20 @@ func AuthorizeAdmin(findUserByEmail func(string) (*models.User, error), tokenInB
 		//	c.AbortWithStatusJSON(http.StatusBadRequest, "unauthorized route ")
 		//}
 
-		if email, ok := accessClaims["user_email"].(string); ok {
-			if user, errors = findUserByEmail(email); errors != nil {
-				log.Printf("find user by email errors: %v\n", err)
-				RespondAndAbort(c, "", http.StatusNotFound, nil, []string{"user not found"})
+		if email, ok := accessClaims["Admin_email"].(string); ok {
+			if admin, errors = findAdminByEmail(email); errors != nil {
+				log.Printf("find admin by email errors: %v\n", err)
+				RespondAndAbort(c, "", http.StatusNotFound, nil, []string{"admin not found"})
 				return
 			}
 		} else {
-			log.Printf("user email is not string\n")
+			log.Printf("admin email is not string\n")
 			RespondAndAbort(c, "", http.StatusInternalServerError, nil, []string{"internal server errors"})
 			return
 		}
 
-		// set the user and token as context parameters.
-		c.Set("user", user)
+		// set the admin and token as context parameters.
+		c.Set("admin", admin)
 		c.Set("access_token", accessToken.Raw)
 
 		// calling next handler

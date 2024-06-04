@@ -13,14 +13,14 @@ const AccessTokenValidity = time.Hour * 24
 const RefreshTokenValidity = time.Hour * 24
 
 type Claims struct {
-	UserEmail string `json:"email"`
+	AdminEmail string `json:"email"`
 	jwt.StandardClaims
 }
 
 func GenerateClaims(email string) (jwt.MapClaims, jwt.MapClaims) {
 	log.Println("generate  claim function", email)
 	accessClaims := jwt.MapClaims{
-		"user_email": email,
+		"admin_email": email,
 		"exp":        time.Now().Add(AccessTokenValidity).Unix(),
 	}
 
