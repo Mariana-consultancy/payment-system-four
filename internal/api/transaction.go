@@ -3,8 +3,9 @@ package api
 import (
 	"payment-system-one/internal/util"
 
-	"github.com/gin-gonic/gin"
 	"payment-system-one/internal/models"
+
+	"github.com/gin-gonic/gin"
 )
 
 func (u *HTTPHandler) TransferFunds(c *gin.Context) {
@@ -53,4 +54,3 @@ func (u *HTTPHandler) TransferFunds(c *gin.Context) {
 	util.Response(c, "Transfer was done successfully", 200, "Transfer was successful", nil)
 
 }
-

@@ -1,8 +1,8 @@
 package api
 
 import (
-	"payment-system-four/internal/models"
-	"payment-system-four/internal/util"
+	"payment-system-one/internal/models"
+	"payment-system-one/internal/util"
 	"regexp"
 
 	"github.com/gin-gonic/gin"

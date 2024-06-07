@@ -30,14 +30,14 @@ func (u *HTTPHandler) CreateUser(c *gin.Context) {
 		util.Response(c, "Invalid email address", 400, "Bad request body", nil)
 		return
 	}
-	
+
 	//check if user already exists
 	_, err := u.Repository.FindUserByEmail(user.Email)
 	if err == nil {
 		util.Response(c, "User already exists", 400, "Bad request body", nil)
 		return
 	}
-	
+
 	//hash (hide) user password
 	hashPass, err := util.HashPassword(user.Password)
 	if err != nil {
@@ -46,7 +46,7 @@ func (u *HTTPHandler) CreateUser(c *gin.Context) {
 	}
 	user.Password = hashPass
 
-	//generate account number 
+	//generate account number
 	acctNo, err := util.GenerateAccountNumber()
 	if err != nil {
 		util.Response(c, "Could not generate account number", 500, "internal server error", nil)
@@ -165,4 +165,3 @@ func (u *HTTPHandler) GetUserByEmail(c *gin.Context) {
 //500 ----- server error
 
 //syntax error
-
