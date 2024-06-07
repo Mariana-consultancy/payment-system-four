@@ -26,10 +26,40 @@ func (u *HTTPHandler) CreateUser(c *gin.Context) {
 	// }
 
 	//validate user email
-	//validate user password
+	if !util.IsValidEmail(user.Email) {
+		util.Response(c, "Invalid email address", 400, "Bad request body", nil)
+		return
+	}
+	
+	//check if user already exists
+	_, err := u.Repository.FindUserByEmail(user.Email)
+	if err == nil {
+		util.Response(c, "User already exists", 400, "Bad request body", nil)
+		return
+	}
+	
+	//hash (hide) user password
+	hashPass, err := util.HashPassword(user.Password)
+	if err != nil {
+		util.Response(c, "Could not hash password", 500, "internal server error", nil)
+		return
+	}
+	user.Password = hashPass
+
+	//generate account number 
+	acctNo, err := util.GenerateAccountNumber()
+	if err != nil {
+		util.Response(c, "Could not generate account number", 500, "internal server error", nil)
+		return
+	}
+
+	user.AccountNumber = acctNo
+
+	//set available balance to 0
+	user.AvailableBalance = 500.0
 
 	//persist information in the data base
-	err := u.Repository.CreateUser(user)
+	err = u.Repository.CreateUser(user)
 	if err != nil {
 		util.Response(c, "user not created", 400, err.Error(), nil)
 		return
@@ -118,7 +148,7 @@ func (u *HTTPHandler) GetUserByEmail(c *gin.Context) {
 
 	user, err := u.Repository.FindUserByEmail(email)
 	if err != nil {
-		util.Response(c, "user not fount", 500, "user not found", nil)
+		util.Response(c, "user not found", 500, "user not found", nil)
 		return
 	}
 
@@ -135,3 +165,4 @@ func (u *HTTPHandler) GetUserByEmail(c *gin.Context) {
 //500 ----- server error
 
 //syntax error
+
