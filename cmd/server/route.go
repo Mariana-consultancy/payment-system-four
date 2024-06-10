@@ -25,15 +25,18 @@ func SetupRouter(handler *api.HTTPHandler, repository ports.Repository) *gin.Eng
 	{
 		r.GET("/", handler.Readiness)
 		r.POST("/create", handler.CreateAdmin)
-		r.POST("/login", handler.LoginUer)
+		r.POST("/admin/create", handler.CreateUser)
+		r.POST("/admin/login", handler.LoginUser)
+		r.POST("/admin/login", handler.LoginAdmin)
 	}
 
 	// authorizeAdmin authorizes all authorized Admins handlers
 	authorizeAdmin := r.Group("/admin")
 	authorizeAdmin.Use(middleware.AuthorizeAdmin(repository.FindAdminByEmail, repository.TokenInBlacklist))
 	{
-		authorizeAdmin.GET("/Admin", handler.GetAdminByEmail)
+		authorizeAdmin.GET("/user", handler.GetUserByEmail)
 	}
 
 	return router
+	
 }

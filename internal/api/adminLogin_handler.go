@@ -33,7 +33,7 @@ func (u *HTTPHandler) CreateAdmin(c *gin.Context) {
 }
 
 // login
-func (u *HTTPHandler) LoginUer(c *gin.Context) {
+func (u *HTTPHandler) LoginAdmin(c *gin.Context) {
 	var loginRequest *models.LoginRequest
 	if err := c.ShouldBind(&loginRequest); err != nil {
 		util.Response(c, "invalid request", 400, "bad request body", nil)

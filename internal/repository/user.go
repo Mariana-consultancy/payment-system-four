@@ -2,25 +2,28 @@ package repository
 
 import "payment-system-one/internal/models"
 
-func (p *Postgres) FindAdminByEmail(email string) (*models.Admin, error) {
-	admin := &models.Admin{}
 
-	if err := p.DB.Where("email = ?", email).First(&admin).Error; err != nil {
+func (p *Postgres) FindUserByEmail(email string) (*models.User, error) {
+	user := &models.User{}
+
+	if err := p.DB.Where("email = ?", email).First(&user).Error; err != nil {
 		return nil, err
 	}
-	return admin, nil
+	return user, nil
 }
 
 // create a admin in thye database
-func (p *Postgres) CreateAdmin(admin *models.Admin) error {
-	if err := p.DB.Create(admin).Error; err != nil {
+
+func (p *Postgres) CreateUser(user *models.User) error {
+	if err := p.DB.Create(user).Error; err != nil {
 		return err
 	}
 	return nil
 }
 
-func (p *Postgres) UpdateAdmin(admin*models.Admin) error {
-	if err := p.DB.Save(admin).Error; err != nil {
+
+func (p *Postgres) UpdateUser(user*models.User) error {
+	if err := p.DB.Save(user).Error; err != nil {
 		return err
 	}
 	return nil

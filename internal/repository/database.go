@@ -26,10 +26,10 @@ func Initialize(dbURI string) (*gorm.DB, error) {
 	if err != nil {
 		//	log.Fatal(err)
 	}
-	err = conn.AutoMigrate(&models.Admin{})
+	err = conn.AutoMigrate(&models.Admin{},&models.User{})
 	if err != nil {
 		return nil, err
 	}
-	log.Println("Database connection successful")
-	return conn, nil
+	log.Println("Database connected successful")
+	return conn,nil
 }

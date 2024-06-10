@@ -2,7 +2,7 @@ package models
 
 import "gorm.io/gorm"
 
-/*type Admin struct {
+type User struct {
 	gorm.Model
 	FirstName    string `json:"first_name"`
 	LastName     string `json:"last_name"`
@@ -13,7 +13,7 @@ import "gorm.io/gorm"
 	Address      string `json:"address"`
 	LoginCounter int    `json:"login_counter"`
 	IsLocked     bool   `json:"is_locked"`
-}*/
+}
 
 type Admin struct {
 	gorm.Model

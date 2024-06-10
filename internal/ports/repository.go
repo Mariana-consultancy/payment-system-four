@@ -7,4 +7,7 @@ type Repository interface {
 	TokenInBlacklist(token *string) bool
 	CreateAdmin(Admin *models.Admin) error
 	UpdateAdmin(Admin *models.Admin) error
+	CreateUser(User*models.User)error
+	FindUserByEmail(email string) (*models.User,error)
+	
 }
