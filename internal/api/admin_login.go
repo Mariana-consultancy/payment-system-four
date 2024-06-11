@@ -3,10 +3,9 @@
 package api
 
 import (
-	"payment-system-one/internal/models"
-	"payment-system-one/internal/util"
-
 	"github.com/gin-gonic/gin"
+	"payment-system-four/internal/models"
+	"payment-system-four/internal/util"
 )
 
 // AdminLogin is a handler function that handles administrator login
